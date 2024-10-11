@@ -12,9 +12,18 @@ class Category:
         """Конструктор класса Category."""
         self.name = name
         self.description = description
-        self.products = products if products else []
+        self.__products = products if products else []  # делаем список товаров приватным атрибутом
         Category.category_count += 1
-        Category.product_count += len(self.products)
+        Category.product_count += len(self.__products)
+
+
+    def add_product(self, products):
+        self.__products.append(products)
+        self.product_count += 1
+
+    @property
+    def products(self):
+        return self.__products
 
 
 if __name__ == "__main__":
