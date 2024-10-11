@@ -17,13 +17,19 @@ class Category:
         Category.product_count += len(self.__products)
 
 
+    # Реализуем метод для добавления товаров
     def add_product(self, products):
         self.__products.append(products)
         self.product_count += 1
 
+    # Реализуем геттер
     @property
     def products(self):
-        return self.__products
+        # Название продукта, 80 руб. Остаток: 15 шт.
+        products_list = []
+        for product in self.__products:
+            products_list.append(f"{product.name}, {product.price}, Остаток: {product.quantity}")
+        return products_list
 
 
 if __name__ == "__main__":
