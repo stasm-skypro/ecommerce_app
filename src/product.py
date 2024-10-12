@@ -1,4 +1,5 @@
 from src.category import Category
+import re
 
 
 class Product:
@@ -13,7 +14,7 @@ class Product:
         """Конструктор класса Product."""
         self.name = name
         self.description = description
-        self.price = price
+        self.__price = price
         self.quantity = quantity
 
 
@@ -27,6 +28,24 @@ class Product:
                 category.product_count += 1
 
         return new_product
+
+    # Геттер для цены продукта
+    @property
+    def price(self):
+        return self.__price
+
+    #  Сеттер для цены продукта
+    @price.setter
+    def price(self, price):
+        if price < self.__price:
+            print("Внимание! Введённая цена {} ниже, чем уже имеющаяся цена для данного продукта!".format(price))
+            if  re.match(input("Подтвердите ввод новой цены? (yes/no) >>>$: "), "yes"):
+                if price <= 0:
+                    raise ValueError("Цена продукта должна быть положительным числом.")
+                self.__price = price
+                print("Новая цена продукта - {}.".format(self.__price))
+            else:
+                print("Цена продукта - {}.".format(self.__price))
 
 
 if __name__ == "__main__":
