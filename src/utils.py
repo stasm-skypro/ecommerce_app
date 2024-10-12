@@ -1,11 +1,12 @@
 import json
 import os
+from typing import Any
 
 from src.category import Category
 from src.product import Product
 
 
-def read_json(path: str) -> list[dict]:
+def read_json(path: str) -> list | Any:
     """Функция считывает информация из json-файла.
     Args:
         path: str - относительный путь к json-файлу.

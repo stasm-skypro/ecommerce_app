@@ -1,5 +1,6 @@
-from src.category import Category
 import re
+
+from src.category import Category
 
 
 class Product:
@@ -7,7 +8,7 @@ class Product:
 
     name: str
     description: str
-    price: float
+    __price: float
     quantity: int
 
     def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
@@ -17,9 +18,9 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
-
     @classmethod
-    def new_product(cls, params: dict, category):
+    def new_product(cls, params: dict, category: Category):
+        """Метод добавляет новый продукт категорию category."""
         new_product = Product(**params)
 
         for product in category.products:
@@ -31,15 +32,17 @@ class Product:
 
     # Геттер для цены продукта
     @property
-    def price(self):
+    def price(self) -> float:
+        """Метод возвращает цену продукта"""
         return self.__price
 
     #  Сеттер для цены продукта
     @price.setter
-    def price(self, price):
+    def price(self, price: float) -> None:
+        """Метод устанавливает цену продукта."""
         if price < self.__price:
             print("Внимание! Введённая цена {} ниже, чем уже имеющаяся цена для данного продукта!".format(price))
-            if  re.match(input("Подтвердите ввод новой цены? (yes/no) >>>$: "), "yes"):
+            if re.match(input("Подтвердите ввод новой цены? (yes/no) >>>$: "), "yes"):
                 if price <= 0:
                     raise ValueError("Цена продукта должна быть положительным числом.")
                 self.__price = price
