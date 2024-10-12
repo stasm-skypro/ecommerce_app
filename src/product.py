@@ -1,3 +1,6 @@
+from src.category import Category
+
+
 class Product:
     """Класс для создания экземпляров товаров."""
 
@@ -12,6 +15,18 @@ class Product:
         self.description = description
         self.price = price
         self.quantity = quantity
+
+
+    @classmethod
+    def new_product(cls, params: dict, category):
+        new_product = Product(**params)
+
+        for product in category.products:
+            if new_product.name in product:
+                new_product.price = max(new_product.price, float(product.split(", ")[1].split()[0]))
+                category.product_count += 1
+
+        return new_product
 
 
 if __name__ == "__main__":

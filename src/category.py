@@ -28,7 +28,8 @@ class Category:
         # Название продукта, 80 руб. Остаток: 15 шт.
         products_list = []
         for product in self.__products:
-            products_list.append(f"{product.name}, {product.price}, Остаток: {product.quantity}")
+            products_list.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity}")
+
         return products_list
 
 
