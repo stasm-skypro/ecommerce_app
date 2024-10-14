@@ -68,7 +68,7 @@ def category() -> Category:
     return cat
 
 
-def test_new_product(category) -> None:
+def test_new_product(category: Category) -> None:
     """Тестируем класс-метод new_product."""
     params = {
         "name": "Пиво Hoegaarden",
@@ -86,7 +86,8 @@ def test_new_product(category) -> None:
     assert category.product_count == 1  # Увеличится на 1, так как продукт с таким именем уже есть
 
 
-def test_new_product_new_entry(category):
+def test_new_product_new_entry(category) -> None:
+    """Тестируем класс-метод new_product."""
     params = {
         "name": "Пармезан",
         "description": "Натуральные сыры",
@@ -101,3 +102,42 @@ def test_new_product_new_entry(category):
     assert new_product.price == 200.0  # Цена останется такой же, так как это новый продукт
     assert new_product.quantity == 5
     assert category.product_count == 0  # Не увеличится, так как это новый продукт
+
+
+from unittest.mock import patch
+
+class TestProduct:
+    """Класс для тестирования геттера и сеттера класса Product."""
+
+    def test_price_getter(self) -> None:
+        """Тестируем геттер."""
+        # Создаем экземпляр продукта
+        product = Product(name="Пармезан", description="Натуральные сыры", price=99.99, quantity=10)
+
+        # Проверяем, что геттер возвращает правильное значение
+        assert product.price == 99.99
+
+    def test_price_setter(self) -> None:
+        """Тестируем сеттер."""
+        # Создаем экземпляр продукта
+        product1 = Product(name="Пармезан", description="Натуральные сыры", price=99.99,
+                          quantity=10)
+
+        # Проверяем, что сеттер устанавливает правильное значение
+        product1.price = 120.00
+        assert product1.price == 120.00
+
+        # Проверяем, что при установке цены ниже текущей выводится предупреждение и цена не меняется
+        with patch('builtins.input', return_value='no'):
+            product1.price = 80.00
+            assert product1.price == 120.00
+
+        # Проверяем, что при установке цены ниже текущей и подтверждении изменения цена меняется
+        with patch('builtins.input', return_value='yes'):
+            product1.price = 80.00
+            assert product1.price == 80.00
+
+
+
+if __name__ == "__main__":
+    pytest.main()
