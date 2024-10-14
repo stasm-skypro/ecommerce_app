@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 
 from src.product import Product
@@ -56,15 +58,15 @@ class Category:
     """Класс для создания категорий товаров."""
 
     def __init__(self) -> None:
-        self.products = []
-        self.product_count = 0
+        self.products: list = []
+        self.product_count: int = 0
 
 
 @pytest.fixture
 def category() -> Category:
     """Определяем фикстуру для класса Category."""
     cat = Category()
-    cat.products = ["Пиво Hoegaarden, 100.0 руб.", "Пиво Heineken, 150.0 руб."]
+    cat.products = ["Пиво Hoegaarden, 100.0 руб. Остаток: 15 шт.", "Пиво Heineken, 150.0 руб. Остаток: 15 шт."]
     return cat
 
 
@@ -74,7 +76,7 @@ def test_new_product(category: Category) -> None:
         "name": "Пиво Hoegaarden",
         "description": "Пиво и слабоалкогольные напитки",
         "price": 120.0,
-        "quantity": 10
+        "quantity": 10,
     }
 
     new_product = Product.new_product(params, category)
@@ -82,18 +84,13 @@ def test_new_product(category: Category) -> None:
     assert new_product.name == "Пиво Hoegaarden"
     assert new_product.description == "Пиво и слабоалкогольные напитки"
     assert new_product.price == 120.0  # Цена не изменится, так как 120.0 < 150.0
-    assert new_product.quantity == 10
+    assert new_product.quantity == 25
     assert category.product_count == 1  # Увеличится на 1, так как продукт с таким именем уже есть
 
 
-def test_new_product_new_entry(category) -> None:
+def test_new_product_new_entry(category: Category) -> None:
     """Тестируем класс-метод new_product."""
-    params = {
-        "name": "Пармезан",
-        "description": "Натуральные сыры",
-        "price": 200.0,
-        "quantity": 5
-    }
+    params = {"name": "Пармезан", "description": "Натуральные сыры", "price": 200.0, "quantity": 5}
 
     new_product = Product.new_product(params, category)
 
@@ -103,8 +100,6 @@ def test_new_product_new_entry(category) -> None:
     assert new_product.quantity == 5
     assert category.product_count == 0  # Не увеличится, так как это новый продукт
 
-
-from unittest.mock import patch
 
 class TestProduct:
     """Класс для тестирования геттера и сеттера класса Product."""
@@ -120,23 +115,21 @@ class TestProduct:
     def test_price_setter(self) -> None:
         """Тестируем сеттер."""
         # Создаем экземпляр продукта
-        product1 = Product(name="Пармезан", description="Натуральные сыры", price=99.99,
-                          quantity=10)
+        product1 = Product(name="Пармезан", description="Натуральные сыры", price=99.99, quantity=10)
 
         # Проверяем, что сеттер устанавливает правильное значение
         product1.price = 120.00
         assert product1.price == 120.00
 
         # Проверяем, что при установке цены ниже текущей выводится предупреждение и цена не меняется
-        with patch('builtins.input', return_value='no'):
+        with patch("builtins.input", return_value="no"):
             product1.price = 80.00
             assert product1.price == 120.00
 
         # Проверяем, что при установке цены ниже текущей и подтверждении изменения цена меняется
-        with patch('builtins.input', return_value='yes'):
+        with patch("builtins.input", return_value="yes"):
             product1.price = 80.00
             assert product1.price == 80.00
-
 
 
 if __name__ == "__main__":
