@@ -20,7 +20,7 @@ class Category:
         Category.product_count += len(self.__products)
 
     # Реализуем метод для добавления товаров
-    def add_product(self, products: list | Any)->None:
+    def add_product(self, products: list | Any) -> None:
         """Метод добавляет продукт в список продуктов."""
         self.__products.append(products)
         self.product_count += 1
@@ -76,5 +76,3 @@ if __name__ == "__main__":
     print(category3.description)
     print(category3.category_count)
     print(category3.product_count)
-
-
