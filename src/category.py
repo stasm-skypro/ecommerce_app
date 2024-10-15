@@ -20,6 +20,7 @@ class Category:
         Category.product_count += len(self.__products)
 
     def __str__(self):
+        # Название категории, количество продуктов: 200 шт.
         return f"{self.name}, количество продуктов: {self.product_count} шт."
 
     # Реализуем метод для добавления товаров
@@ -32,7 +33,6 @@ class Category:
     @property
     def products(self) -> list:
         """Метод возвращает список продуктов."""
-        # Название продукта, 80 руб. Остаток: 15 шт.
         products_list = []
         for product in self.__products:
             products_list.append(f"{str(product)}")  # Строковое представление продукта реализовано в классе Product

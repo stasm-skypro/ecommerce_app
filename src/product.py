@@ -10,18 +10,23 @@ class Product:
     description: str
     __price: float
     quantity: int
+    total_price: float
 
-    def __init__(self, name: str, description: str, price: float, quantity: int) -> None:
+    def __init__(self, name: str, description: str, price: float, quantity: int, total_price=0) -> None:
         """Конструктор класса Product."""
         self.name = name
         self.description = description
         self.__price = price
         self.quantity = quantity
+        self.total_price = total_price
 
     def __str__(self) -> str:
         """Строковое представление экземпляра класса."""
+        # Название продукта, 80 руб. Остаток: 15 шт.
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
+    def __add__(self, other):
+        return self.__price * self.quantity + other.__price * other.quantity
 
     @classmethod
     def new_product(cls, params: dict, category: Category):
@@ -106,21 +111,28 @@ if __name__ == "__main__":
         },
         category1,
     )
-    # При установке цены выше имеющейся, цена меняется на большую.
-    product4.price = 600
-    print(product4.price)
-
-    # При установке цены ниже имеющейся, задаётся вопрос.
-    product4.price = 400
-    print(product4.price)
-
-    # При установке цены 0, выводится предупреждение.
-    product4.price = 0
-    print(product4.price)
-
-    # При установке цены ниже 0, выводится предупреждение.
-    product4.price = -10
-    print(product4.price)
+    # # При установке цены выше имеющейся, цена меняется на большую.
+    # product4.price = 600
+    # print(product4.price)
+    #
+    # # При установке цены ниже имеющейся, задаётся вопрос.
+    # product4.price = 400
+    # print(product4.price)
+    #
+    # # При установке цены 0, выводится предупреждение.
+    # product4.price = 0
+    # print(product4.price)
+    #
+    # # При установке цены ниже 0, выводится предупреждение.
+    # product4.price = -10
+    # print(product4.price)
 
     # Строковое представление экземпляра.
     print(product4)
+    print()
+
+    # Вычисляем полную стоимость всех товаров на складе
+    print(product1)
+    print(product2)
+    print(product1 + product2)
+    print()
