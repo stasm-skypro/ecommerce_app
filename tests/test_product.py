@@ -1,3 +1,4 @@
+from idlelib.run import print_exception
 from unittest.mock import patch
 
 import pytest
@@ -109,7 +110,7 @@ class TestProduct:
         # Создаем экземпляр продукта
         product = Product(name="Пармезан", description="Натуральные сыры", price=99.99, quantity=10)
 
-        # Проверяем, что геттер возвращает правильное значение
+        # Проверяем, что геттер возвращает правильное значение.
         assert product.price == 99.99
 
     def test_price_setter(self) -> None:
@@ -117,18 +118,28 @@ class TestProduct:
         # Создаем экземпляр продукта
         product1 = Product(name="Пармезан", description="Натуральные сыры", price=99.99, quantity=10)
 
-        # Проверяем, что сеттер устанавливает правильное значение
+        # Проверяем, что сеттер устанавливает правильное значение.
         product1.price = 120.00
         assert product1.price == 120.00
 
-        # Проверяем, что при установке цены ниже текущей выводится предупреждение и цена не меняется
+        # Проверяем, что при установке цены ниже текущей выводится предупреждение и цена не меняется.
         with patch("builtins.input", return_value="no"):
             product1.price = 80.00
             assert product1.price == 120.00
 
-        # Проверяем, что при установке цены ниже текущей и подтверждении изменения цена меняется
+        # Проверяем, что при установке равной цены, цена не меняется.
         with patch("builtins.input", return_value="yes"):
             product1.price = 80.00
+            assert product1.price == 80.00
+
+        # Проверяем, что при установке цены равной 0, цена не меняется.
+        with patch('builtins.print', return_value="Цена не должна быть нулевая или отрицательная."):
+            product1.price = 0.0
+            assert product1.price == 80.00
+
+        # Проверяем, что при установке цены меньшей 0, цена не меняется.
+        with patch('builtins.print', return_value="Цена не должна быть нулевая или отрицательная."):
+            product1.price = -10.0
             assert product1.price == 80.00
 
 

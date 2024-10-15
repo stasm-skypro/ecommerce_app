@@ -43,17 +43,29 @@ class Product:
     @price.setter
     def price(self, price: float) -> None:
         """Метод устанавливает цену продукта."""
-        if price < self.__price:
-            print("Внимание! Введённая цена {} ниже, чем уже имеющаяся цена для данного продукта!".format(price))
-            if re.match(input("Подтвердите ввод новой цены? (yes/no) >>>$: "), "yes"):
-                if price <= 0:
-                    raise ValueError("Цена не должна быть нулевая или отрицательная.")
-                self.__price = price
-                print("Новая цена продукта - {}.".format(self.__price))
-            else:
-                print("Цена продукта - {}.".format(self.__price))
+        # Если цена меньше или равна 0, то выводим предупреждение.
+        if price <= 0:
+            print(f"Вы ввели цену {price}.")
+            print("Цена не должна быть нулевая или отрицательная.")
+        # Иначе
         else:
-            self.__price = price
+            # Если новая цена больше прежней, автоматически принимаем новую цену.
+            if price > self.__price:
+                self.__price = price
+                print(f"Новая цена продукта - {self.__price}.")
+            elif price == self.__price:
+                print(f"Цена продукта не изменилась - {self.__price}.")
+            # Если новая цена меньше, чем уже имеющаяся цена для данного продукта,
+            else:
+                print(f"Внимание! Введённая цена {price} меньше, чем уже имеющаяся цена для данного продукта!")
+                # спрашиваем подтверждение пользователя на ввод меньшей цены и вносим изменения.
+                if re.match(input("Подтвердите ввод новой цены? (yes/no) >>> %: "), "yes"):
+                    self.__price = price
+                    print(f"Новая цена продукта - {self.__price}.")
+                # Иначе оставляем прежнюю цену.
+                else:
+                    print(f"Цена продукта не изменилась - {self.__price}.")
+
 
 
 if __name__ == "__main__":
@@ -97,6 +109,10 @@ if __name__ == "__main__":
     product4.price = 400
     print(product4.price)
 
-    # При установке цены ниже 0, выбрасывается исключение.
+    # При установке цены 0, выводится предупреждение.
+    product4.price = 0
+    print(product4.price)
+
+    # При установке цены ниже 0, выводится предупреждение.
     product4.price = -10
     print(product4.price)
