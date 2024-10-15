@@ -19,6 +19,9 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(self.__products)
 
+    def __str__(self):
+        return f"{self.name}, количество продуктов: {self.product_count} шт."
+
     # Реализуем метод для добавления товаров
     def add_product(self, products: list | Any) -> None:
         """Метод добавляет продукт в список продуктов."""
@@ -32,7 +35,7 @@ class Category:
         # Название продукта, 80 руб. Остаток: 15 шт.
         products_list = []
         for product in self.__products:
-            products_list.append(f"{product.name}, {product.price} руб. Остаток: {product.quantity} шт.")
+            products_list.append(f"{str(product)}")  # Строковое представление продукта реализовано в классе Product
 
         return products_list
 
@@ -50,6 +53,7 @@ if __name__ == "__main__":
     print(category1.products)
     print(category1.category_count)
     print(category1.product_count)
+    print()
 
     category2 = Category(
         name="Продукты",
@@ -64,6 +68,7 @@ if __name__ == "__main__":
     print(category2.description)
     print(category2.category_count)
     print(category2.product_count)
+    print()
 
     category3 = Category(
         name="Одежда",
@@ -76,3 +81,13 @@ if __name__ == "__main__":
     print(category3.description)
     print(category3.category_count)
     print(category3.product_count)
+    print()
+
+    # Проверка работы геттера
+    print(category2.products)
+    print()
+
+    # Проверка строкового представления экземпляра класса
+    print(category2)
+    print()
+

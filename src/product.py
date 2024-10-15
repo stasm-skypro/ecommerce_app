@@ -18,6 +18,11 @@ class Product:
         self.__price = price
         self.quantity = quantity
 
+    def __str__(self) -> str:
+        """Строковое представление экземпляра класса."""
+        return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
+
+
     @classmethod
     def new_product(cls, params: dict, category: Category):
         """Метод добавляет новый продукт категорию category."""
@@ -116,3 +121,6 @@ if __name__ == "__main__":
     # При установке цены ниже 0, выводится предупреждение.
     product4.price = -10
     print(product4.price)
+
+    # Строковое представление экземпляра.
+    print(product4)
