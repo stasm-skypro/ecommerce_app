@@ -26,6 +26,9 @@ class Product:
         for product in category.products:
             if new_product.name in product:
                 new_product.price = max(new_product.price, float(product.split(", ")[1].split()[0]))
+                print("quantity", product.split(" ")[-2])
+                print(product)
+                new_product.quantity += int(product.split(" ")[-2])
                 category.product_count += 1
 
         return new_product
@@ -44,11 +47,13 @@ class Product:
             print("Внимание! Введённая цена {} ниже, чем уже имеющаяся цена для данного продукта!".format(price))
             if re.match(input("Подтвердите ввод новой цены? (yes/no) >>>$: "), "yes"):
                 if price <= 0:
-                    raise ValueError("Цена продукта должна быть положительным числом.")
+                    raise ValueError("Цена не должна быть нулевая или отрицательная.")
                 self.__price = price
                 print("Новая цена продукта - {}.".format(self.__price))
             else:
                 print("Цена продукта - {}.".format(self.__price))
+        else:
+            self.__price = price
 
 
 if __name__ == "__main__":
@@ -69,3 +74,29 @@ if __name__ == "__main__":
     print(product3.description)
     print(product3.price)
     print(product3.quantity)
+
+    category1 = Category(
+        "Продукты",
+        "Продукты первой необходимости",
+        [product1, product2, product3],
+    )
+    product4 = Product.new_product(
+        {
+            "name": "Яйца",
+            "description": "Яйца 1С",
+            "price": 500.0,
+            "quantity": 1,
+        },
+        category1,
+    )
+    # При установке цены выше имеющейся, цена меняется на большую.
+    product4.price = 600
+    print(product4.price)
+
+    # При установке цены ниже имеющейся, задаётся вопрос.
+    product4.price = 400
+    print(product4.price)
+
+    # При установке цены ниже 0, выбрасывается исключение.
+    product4.price = -10
+    print(product4.price)

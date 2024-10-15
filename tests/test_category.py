@@ -1,4 +1,3 @@
-
 from src.category import Category
 
 
@@ -59,7 +58,7 @@ def test_products_property() -> None:
         name="Электроника", description="Электроника и устройства для дома", products=[product1, product2]
     )
 
-    expected_result = ["Ноутбук, 80000 руб. Остаток: 15", "Смартфон, 60000 руб. Остаток: 10"]
+    expected_result = ["Ноутбук, 80000 руб. Остаток: 15 шт.", "Смартфон, 60000 руб. Остаток: 10 шт."]
 
     assert category.products == expected_result
 
