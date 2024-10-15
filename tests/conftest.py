@@ -52,3 +52,5 @@ def product3_fixture() -> Product:
 def product4_fixture() -> Product:
     """Фикстура для тестирования инициализации экземпляров класса Product."""
     return Product(name="Шорты", description="Шорты мужские, размер 50", price=5000.00, quantity=2)
+
+

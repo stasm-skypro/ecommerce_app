@@ -51,15 +51,12 @@ def test_add_product_to_existing_list() -> None:
 def test_products_property() -> None:
     """Проверяем работу геттера когда есть список продуктов."""
     from src.product import Product
-
     product1 = Product(name="Ноутбук", description="Компьютеры", price=80000, quantity=15)
     product2 = Product(name="Смартфон", description="Телефоны", price=60000, quantity=10)
     category = Category(
         name="Электроника", description="Электроника и устройства для дома", products=[product1, product2]
     )
-
     expected_result = ["Ноутбук, 80000 руб. Остаток: 15 шт.", "Смартфон, 60000 руб. Остаток: 10 шт."]
-
     assert category.products == expected_result
 
 
@@ -67,3 +64,8 @@ def test_products_property_empty() -> None:
     """Проверяем работу геттера когда список продуктов пустой."""
     category = Category(name="Книги", description="Книги всех жанров")
     assert category.products == []
+
+
+def test_category_str(category1_fixture) -> None:
+    """Тест для проверки метода __str__ класса Category."""
+    assert str(category1_fixture) == "Продукты, количество продуктов: 14 шт."

@@ -1,4 +1,3 @@
-from idlelib.run import print_exception
 from unittest.mock import patch
 
 import pytest
@@ -79,9 +78,7 @@ def test_new_product(category: Category) -> None:
         "price": 120.0,
         "quantity": 10,
     }
-
     new_product = Product.new_product(params, category)
-
     assert new_product.name == "Пиво Hoegaarden"
     assert new_product.description == "Пиво и слабоалкогольные напитки"
     assert new_product.price == 120.0  # Цена не изменится, так как 120.0 < 150.0
@@ -92,9 +89,7 @@ def test_new_product(category: Category) -> None:
 def test_new_product_new_entry(category: Category) -> None:
     """Тестируем класс-метод new_product."""
     params = {"name": "Пармезан", "description": "Натуральные сыры", "price": 200.0, "quantity": 5}
-
     new_product = Product.new_product(params, category)
-
     assert new_product.name == "Пармезан"
     assert new_product.description == "Натуральные сыры"
     assert new_product.price == 200.0  # Цена останется такой же, так как это новый продукт
@@ -141,6 +136,16 @@ class TestProduct:
         with patch('builtins.print', return_value="Цена не должна быть нулевая или отрицательная."):
             product1.price = -10.0
             assert product1.price == 80.00
+
+
+def test_product_str(product1_fixture) -> None:
+    """Тест для проверки метода __str__ класса Product."""
+    assert str(product1_fixture) == "Молоко, 500.0 руб. Остаток: 5 шт."
+
+
+def test_product_add(product1_fixture, product2_fixture) -> None:
+    """Тест для проверки метода __add__ класса Product."""
+    assert product1_fixture + product2_fixture == 2800.00
 
 
 if __name__ == "__main__":
