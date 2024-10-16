@@ -1,4 +1,5 @@
 import re
+from typing import Self, Any
 
 from src.category import Category
 
@@ -12,7 +13,7 @@ class Product:
     quantity: int
     total_price: float
 
-    def __init__(self, name: str, description: str, price: float, quantity: int, total_price: float=0) -> None:
+    def __init__(self, name: str, description: str, price: float, quantity: int, total_price: float = 0) -> None:
         """Конструктор класса Product."""
         self.name = name
         self.description = description
@@ -20,12 +21,12 @@ class Product:
         self.quantity = quantity
         self.total_price = total_price
 
-    def __str__(self) -> str:
+    def __str__(self: Self) -> str:
         """Строковое представление экземпляра класса."""
         # Название продукта, 80 руб. Остаток: 15 шт.
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self, other):
+    def __add__(self: Self, other) -> float | Any:
         return self.__price * self.quantity + other.__price * other.quantity
 
     @classmethod

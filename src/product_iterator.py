@@ -1,3 +1,5 @@
+from typing import Self, Any
+
 from src.category import Category
 from src.product import Product
 
@@ -5,15 +7,15 @@ from src.product import Product
 class ProductIterator:
     """Класс для итерирования по списку продуктов в категории."""
 
-    def __init__(self, category_object) -> None:
+    def __init__(self: Self, category_object: Category) -> None:
         self.category = category_object
         self.current = 0
 
-    def __iter__(self):
+    def __iter__(self: Self) -> Self:
         self.current = 0
         return self
 
-    def __next__(self) -> StopIteration | Product:
+    def __next__(self: Self) -> StopIteration | Product | Any:
         if self.current >= len(self.category.products):
             raise StopIteration
         else:

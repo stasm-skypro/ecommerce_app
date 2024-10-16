@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Self
 
 
 class Category:
@@ -19,7 +19,7 @@ class Category:
         Category.category_count += 1
         Category.product_count += len(self.__products)
 
-    def __str__(self):
+    def __str__(self: Self) -> str:
         # Название категории, количество продуктов: 200 шт.
         return f"{self.name}, количество продуктов: {self.product_count} шт."
 

@@ -65,6 +65,17 @@ def product4_fixture() -> Product:
 
 
 @pytest.fixture
+def params_fixture() -> dict:
+    """Фикстура для метода new_product класса Product."""
+    return {
+        "name": "Яйца",
+        "description": "Яйца 1С",
+        "price": 500.0,
+        "quantity": 1,
+    }
+
+
+@pytest.fixture
 def product_iterator(category1_fixture: Category) -> ProductIterator:
     """Фикстура для тестирования инициализации и работы класса ProductIterator."""
     return ProductIterator(category1_fixture)

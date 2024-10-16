@@ -3,6 +3,8 @@ from unittest.mock import patch
 import pytest
 
 from src.product import Product
+from src.category import Category
+from tests.conftest import category1_fixture
 
 
 def test_product1_init(product1_fixture: Product) -> None:
@@ -53,48 +55,24 @@ def test_product4_count(product4_fixture: Product) -> None:
     assert product4_fixture.quantity == 2
 
 
-# Тест для класс-метода new_product
-class Category:
-    """Класс для создания категорий товаров."""
-
-    def __init__(self) -> None:
-        self.products: list = []
-        self.product_count: int = 0
-
-
-@pytest.fixture
-def category() -> Category:
-    """Определяем фикстуру для класса Category."""
-    cat = Category()
-    cat.products = ["Пиво Hoegaarden, 100.0 руб. Остаток: 15 шт.", "Пиво Heineken, 150.0 руб. Остаток: 15 шт."]
-    return cat
-
-
-def test_new_product(category: Category) -> None:
+def test_new_product(params_fixture: dict, category1_fixture: Category) -> None:
     """Тестируем класс-метод new_product."""
-    params = {
-        "name": "Пиво Hoegaarden",
-        "description": "Пиво и слабоалкогольные напитки",
-        "price": 120.0,
-        "quantity": 10,
-    }
-    new_product = Product.new_product(params, category)
-    assert new_product.name == "Пиво Hoegaarden"
-    assert new_product.description == "Пиво и слабоалкогольные напитки"
-    assert new_product.price == 120.0  # Цена не изменится, так как 120.0 < 150.0
-    assert new_product.quantity == 25
-    assert category.product_count == 1  # Увеличится на 1, так как продукт с таким именем уже есть
+    new_product = Product.new_product(params_fixture, category1_fixture)
+    assert new_product.name == "Яйца"
+    assert new_product.description == "Яйца 1С"
+    assert new_product.price == 500.0  # Цена не изменится, так как 120.0 < 150.0
+    assert new_product.quantity == 3
+    assert category1_fixture.product_count == 24  # Увеличится на 1, так как продукт с таким именем уже есть
 
 
-def test_new_product_new_entry(category: Category) -> None:
+def test_new_product_new_entry(params_fixture: dict, category1_fixture: Category) -> None:
     """Тестируем класс-метод new_product."""
-    params = {"name": "Пармезан", "description": "Натуральные сыры", "price": 200.0, "quantity": 5}
-    new_product = Product.new_product(params, category)
-    assert new_product.name == "Пармезан"
-    assert new_product.description == "Натуральные сыры"
-    assert new_product.price == 200.0  # Цена останется такой же, так как это новый продукт
-    assert new_product.quantity == 5
-    assert category.product_count == 0  # Не увеличится, так как это новый продукт
+    new_product = Product.new_product(params_fixture, category1_fixture)
+    assert new_product.name == "Яйца"
+    assert new_product.description == "Яйца 1С"
+    assert new_product.price == 500.0  # Цена останется такой же, так как это новый продукт
+    assert new_product.quantity == 3
+    assert category1_fixture.product_count == 27  # Не увеличится, так как это новый продукт
 
 
 class TestProduct:
