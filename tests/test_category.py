@@ -38,7 +38,7 @@ def test_add_single_product(category1_fixture: Category, product2_fixture: Produ
     """Проверяем работу метода add_product для случая, когда добавляется один продукт."""
     category1_fixture.add_product(product2_fixture)
     assert category1_fixture.products == ['Молоко, 500.0 руб. Остаток: 5 шт.', 'Хлеб, 100.0 руб. Остаток: 3 шт.', 'Яйца, 500.0 руб. Остаток: 2 шт.', 'Хлеб, 100.0 руб. Остаток: 3 шт.']
-    assert category1_fixture.product_count == 12
+    assert category1_fixture.product_count == 4
 
 
 def test_add_product_to_existing_list(product1_fixture: Product, product2_fixture: Product) -> None:
@@ -69,7 +69,7 @@ def test_products_property_empty() -> None:
 
 def test_category_str(category1_fixture: Category) -> None:
     """Тест для проверки метода __str__ класса Category."""
-    assert str(category1_fixture) == "Продукты, количество продуктов: 17 шт."
+    assert str(category1_fixture) == "Продукты, количество продуктов: 3 шт."
 
 
 def test_product_iterator(product_iterator: ProductIterator) -> None:

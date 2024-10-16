@@ -62,7 +62,7 @@ def test_new_product(params_fixture: dict, category1_fixture: Category) -> None:
     assert new_product.description == "Яйца 1С"
     assert new_product.price == 500.0  # Цена не изменится, так как 120.0 < 150.0
     assert new_product.quantity == 3
-    assert category1_fixture.product_count == 24  # Увеличится на 1, так как продукт с таким именем уже есть
+    assert category1_fixture.product_count == 4  # Увеличится на 1, так как продукт с таким именем уже есть
 
 
 def test_new_product_new_entry(params_fixture: dict, category1_fixture: Category) -> None:
@@ -72,7 +72,7 @@ def test_new_product_new_entry(params_fixture: dict, category1_fixture: Category
     assert new_product.description == "Яйца 1С"
     assert new_product.price == 500.0  # Цена останется такой же, так как это новый продукт
     assert new_product.quantity == 3
-    assert category1_fixture.product_count == 27  # Не увеличится, так как это новый продукт
+    assert category1_fixture.product_count == 4  # Не увеличится, так как это новый продукт
 
 
 class TestProduct:

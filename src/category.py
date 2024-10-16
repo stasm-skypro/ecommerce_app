@@ -17,7 +17,7 @@ class Category:
         self.description = description
         self.__products = products if products else []  # делаем список товаров приватным атрибутом
         Category.category_count += 1
-        Category.product_count += len(self.__products)
+        self.product_count += len(self.__products)
 
     def __str__(self: Self) -> str:
         # Название категории, количество продуктов: 200 шт.
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     print(category1)
     print()
 
-    print("Инициализация категории 1")
+    print("Инициализация категории 2")
     category2 = Category(
         name="Одежда",
         description="Товары широкого потребления",
@@ -95,16 +95,24 @@ if __name__ == "__main__":
             Product("Шорты", "Шорты мужские, размер 50", 5000.00, 2),
         ],
     )
-    print(category1.name)
-    print(category1.description)
-    print(category1.category_count)
-    print(category1.product_count)
+    print(category2.name)
+    print(category2.description)
+    print(category2.category_count)
+    print(category2.product_count)
     print()
 
-    print("Проверка работы геттера")
+    print("Проверка работы геттера для категории 1")
     print(category1.products)
     print()
 
-    print("Проверка строкового представления экземпляра класса")
+    print("Проверка строкового представления экземпляра класса категории 1")
     print(category1)
+    print()
+
+    print("Проверка работы геттера для категории 2")
+    print(category2.products)
+    print()
+
+    print("Проверка строкового представления экземпляра класса категории 2")
+    print(category2)
     print()
