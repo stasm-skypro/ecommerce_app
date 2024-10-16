@@ -40,22 +40,24 @@ class Category:
         return products_list
 
 
+# -----------------------------------------------------------------------------
 if __name__ == "__main__":
     from product import Product
 
-    category1 = Category(
+    print("Инициализация категории с пустым списком продуктов")
+    category0 = Category(
         name="Пылесосы",
         description="Техника для дома",
-        products=[],
     )
-    print(category1.name)
-    print(category1.description)
-    print(category1.products)
-    print(category1.category_count)
-    print(category1.product_count)
+    print(category0.name)
+    print(category0.description)
+    print(category0.products)
+    print(category0.category_count)
+    print(category0.product_count)
     print()
 
-    category2 = Category(
+    print("Инициализация категории 1")
+    category1 = Category(
         name="Продукты",
         description="Товары первой необходимости",
         products=[
@@ -64,30 +66,45 @@ if __name__ == "__main__":
             Product("Яйца", "Яйца 1С", 500.00, 2),
         ],
     )
-    print(category2.name)
-    print(category2.description)
-    print(category2.category_count)
-    print(category2.product_count)
+    print(category1.name)
+    print(category1.description)
+    print(category1.category_count)
+    print(category1.product_count)
     print()
 
-    category3 = Category(
+    print("Добавление продукта в список продуктов")
+    category1.add_product(Product("Молоко", "Молоко коровье 3%", 500.00, 1))
+    print(category1.description)
+    print(category1.category_count)
+    print(category1.product_count)
+    print()
+
+    print("Проверка работы геттера")
+    print(category1.products)
+    print()
+
+    print("Проверка строкового представления экземпляра класса")
+    print(category1)
+    print()
+
+    print("Инициализация категории 1")
+    category2 = Category(
         name="Одежда",
         description="Товары широкого потребления",
         products=[
             Product("Шорты", "Шорты мужские, размер 50", 5000.00, 2),
         ],
     )
-    print(category3.name)
-    print(category3.description)
-    print(category3.category_count)
-    print(category3.product_count)
+    print(category1.name)
+    print(category1.description)
+    print(category1.category_count)
+    print(category1.product_count)
     print()
 
-    # Проверка работы геттера
-    print(category2.products)
+    print("Проверка работы геттера")
+    print(category1.products)
     print()
 
-    # Проверка строкового представления экземпляра класса
-    print(category2)
+    print("Проверка строкового представления экземпляра класса")
+    print(category1)
     print()
-

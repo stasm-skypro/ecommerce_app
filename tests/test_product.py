@@ -128,25 +128,26 @@ class TestProduct:
             assert product1.price == 80.00
 
         # Проверяем, что при установке цены равной 0, цена не меняется.
-        with patch('builtins.print', return_value="Цена не должна быть нулевая или отрицательная."):
+        with patch("builtins.print", return_value="Цена не должна быть нулевая или отрицательная."):
             product1.price = 0.0
             assert product1.price == 80.00
 
         # Проверяем, что при установке цены меньшей 0, цена не меняется.
-        with patch('builtins.print', return_value="Цена не должна быть нулевая или отрицательная."):
+        with patch("builtins.print", return_value="Цена не должна быть нулевая или отрицательная."):
             product1.price = -10.0
             assert product1.price == 80.00
 
 
-def test_product_str(product1_fixture) -> None:
+def test_product_str(product1_fixture: Product) -> None:
     """Тест для проверки метода __str__ класса Product."""
     assert str(product1_fixture) == "Молоко, 500.0 руб. Остаток: 5 шт."
 
 
-def test_product_add(product1_fixture, product2_fixture) -> None:
+def test_product_add(product1_fixture: Product, product2_fixture: Product) -> None:
     """Тест для проверки метода __add__ класса Product."""
     assert product1_fixture + product2_fixture == 2800.00
 
 
+# -----------------------------------------------------------------------------
 if __name__ == "__main__":
     pytest.main()

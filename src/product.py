@@ -12,7 +12,7 @@ class Product:
     quantity: int
     total_price: float
 
-    def __init__(self, name: str, description: str, price: float, quantity: int, total_price=0) -> None:
+    def __init__(self, name: str, description: str, price: float, quantity: int, total_price: float=0) -> None:
         """Конструктор класса Product."""
         self.name = name
         self.description = description
@@ -36,8 +36,6 @@ class Product:
         for product in category.products:
             if new_product.name in product:
                 new_product.price = max(new_product.price, float(product.split(", ")[1].split()[0]))
-                print("quantity", product.split(" ")[-2])
-                print(product)
                 new_product.quantity += int(product.split(" ")[-2])
                 category.product_count += 1
 
@@ -77,32 +75,49 @@ class Product:
                     print(f"Цена продукта не изменилась - {self.__price}.")
 
 
-
+# -----------------------------------------------------------------------------
 if __name__ == "__main__":
+    print("Инициализация продукта 1")
     product1 = Product("Молоко", "Молоко коровье 3%", 500.00, 5)
     print(product1.name)
     print(product1.description)
     print(product1.price)
     print(product1.quantity)
+    print()
 
+    print("Инициализация продукта 2")
     product2 = Product("Хлеб", "Хлеб белый стандартный", 100.0, 3)
     print(product2.name)
     print(product2.description)
     print(product2.price)
     print(product2.quantity)
+    print()
 
+    print("Инициализация продукта 3")
     product3 = Product("Яйца", "Яйца 1С", 500.0, 2)
     print(product3.name)
     print(product3.description)
     print(product3.price)
     print(product3.quantity)
+    print()
 
+    print("Инициализация продукта 4")
+    product4 = Product("Шорты", "Шорты мужские, размер 50", 5000.0, 2)
+    print(product4.name)
+    print(product4.description)
+    print(product4.price)
+    print(product4.quantity)
+
+    print("Инициализация категории 1 с продуктами 1, 2, 3")
     category1 = Category(
         "Продукты",
         "Продукты первой необходимости",
         [product1, product2, product3],
     )
-    product4 = Product.new_product(
+    print()
+
+    print("Проверка работы метода new_product")
+    product31 = Product.new_product(
         {
             "name": "Яйца",
             "description": "Яйца 1С",
@@ -111,27 +126,28 @@ if __name__ == "__main__":
         },
         category1,
     )
-    # # При установке цены выше имеющейся, цена меняется на большую.
+
+    # print("При установке цены выше имеющейся, цена меняется на большую").
     # product4.price = 600
     # print(product4.price)
     #
-    # # При установке цены ниже имеющейся, задаётся вопрос.
+    # print("При установке цены ниже имеющейся, задаётся вопрос")
     # product4.price = 400
     # print(product4.price)
     #
-    # # При установке цены 0, выводится предупреждение.
+    # print("При установке цены 0, выводится предупреждение")
     # product4.price = 0
     # print(product4.price)
     #
-    # # При установке цены ниже 0, выводится предупреждение.
+    # print("При установке цены ниже 0, выводится предупреждение")
     # product4.price = -10
     # print(product4.price)
 
-    # Строковое представление экземпляра.
+    print("Строковое представление экземпляра")
     print(product4)
     print()
 
-    # Вычисляем полную стоимость всех товаров на складе
+    print("Вычисляем полную стоимость всех товаров на складе")
     print(product1)
     print(product2)
     print(product1 + product2)
