@@ -2,6 +2,16 @@ import pytest
 
 from src.category import Category
 from src.product import Product
+from src.product_iterator import ProductIterator
+
+
+@pytest.fixture
+def category0_fixture() -> Category:
+    """Фикстура для тестирования инициализации экземпляров класса Category с пустым списком продуктов."""
+    return Category(
+        name="Пылесосы",
+        description="Техника для дома",
+    )
 
 
 @pytest.fixture
@@ -52,3 +62,20 @@ def product3_fixture() -> Product:
 def product4_fixture() -> Product:
     """Фикстура для тестирования инициализации экземпляров класса Product."""
     return Product(name="Шорты", description="Шорты мужские, размер 50", price=5000.00, quantity=2)
+
+
+@pytest.fixture
+def params_fixture() -> dict:
+    """Фикстура для метода new_product класса Product."""
+    return {
+        "name": "Яйца",
+        "description": "Яйца 1С",
+        "price": 500.0,
+        "quantity": 1,
+    }
+
+
+@pytest.fixture
+def product_iterator(category1_fixture: Category) -> ProductIterator:
+    """Фикстура для тестирования инициализации и работы класса ProductIterator."""
+    return ProductIterator(category1_fixture)
