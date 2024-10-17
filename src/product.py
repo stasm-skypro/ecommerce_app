@@ -32,7 +32,8 @@ class Product:
     @classmethod
     def new_product(cls, params: dict, category: Category):
         """Метод добавляет новый продукт категорию category."""
-        new_product = Product(**params)
+        # new_product = Product(**params)
+        new_product = cls(**params)  # так правильней
 
         for product in category.products:
             if new_product.name in product:
@@ -127,6 +128,8 @@ if __name__ == "__main__":
         },
         category1,
     )
+    print(product31)
+    print()
 
     # print("При установке цены выше имеющейся, цена меняется на большую").
     # product4.price = 600
