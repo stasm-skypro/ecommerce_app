@@ -1,9 +1,9 @@
 from typing import Any, Self
+from src.product import Product
 
 
 class Category:
     """Класс для создания экземпляров категорий товаров."""
-
     name: str
     description: str
     __products: list
@@ -16,18 +16,21 @@ class Category:
         self.name = name
         self.description = description
         self.__products = products if products else []  # делаем список товаров приватным атрибутом
-        Category.category_count += 1
         self.product_count += len(self.__products)
+        Category.category_count += 1
 
     def __str__(self: Self) -> str:
         # Название категории, количество продуктов: 200 шт.
         return f"{self.name}, количество продуктов: {self.product_count} шт."
 
     # Реализуем метод для добавления товаров
-    def add_product(self, products: list | Any) -> None:
+    def add_product(self, product) -> None:
         """Метод добавляет продукт в список продуктов."""
-        self.__products.append(products)
-        self.product_count += 1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            self.product_count += 1
+        else:
+            raise TypeError
 
     # Реализуем геттер
     @property

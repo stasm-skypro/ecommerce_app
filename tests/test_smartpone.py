@@ -40,3 +40,14 @@ def test_add_method_with_incorrect_instance(smartphone_fixture1: Smartphone, gra
     """
     with pytest.raises(TypeError):
         smartphone_fixture1 + grass_fixture1
+
+
+def test_add_method_with_incorrect_instance2(smartphone_fixture1, product1_fixture) -> None:
+    """
+    Тестируем работу метода __add__ класса Product с невалидными аргументами
+    :param smartphone_fixture1: экземпляр класса Smartphone подкласса Product
+    :param product1_fixture: экземпляр класса Product
+    :return: None
+    """
+    with pytest.raises(TypeError):
+        smartphone_fixture1 + product1_fixture
