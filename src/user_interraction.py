@@ -31,9 +31,7 @@ def use_case_product_price_setter(new_price: float, current_price: float) -> flo
 
         # Если новая цена меньше, чем уже имеющаяся цена для данного продукта,
         else:
-            print(
-                f"Внимание! Введённая цена {new_price} меньше, чем уже имеющаяся цена {current_price}!"
-            )
+            print(f"Внимание! Введённая цена {new_price} меньше, чем уже имеющаяся цена {current_price}!")
             # спрашиваем подтверждение пользователя на ввод меньшей цены и вносим изменения.
             if re.match(input("Подтвердите ввод новой цены? (yes/no) >> %: "), "yes"):
                 print(f"Новая цена продукта - {new_price}.")

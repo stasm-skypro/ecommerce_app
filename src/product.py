@@ -4,12 +4,13 @@ from src.user_interraction import use_case_product_price_setter
 
 class Product:
     """Класс для создания экземпляров товаров."""
+
     name: str
     description: str
     __price: float
     quantity: int
     total_price: float
-    products_list = []
+    products_list: list = []
 
     def __init__(self, name: str, description: str, price: float, quantity: int, total_price: float = 0) -> None:
         """Конструктор класса Product."""
@@ -32,7 +33,7 @@ class Product:
         raise TypeError
 
     @classmethod
-    def new_product(cls, params: dict):
+    def new_product(cls, params: dict) -> Any:
         """Метод добавляет новый продукт категорию category."""
         new_product = cls(**params)  # вызываем конструктор класса Product
 
@@ -79,7 +80,8 @@ class Product:
         #     # Если новая цена меньше, чем уже имеющаяся цена для данного продукта,
         #     else:
         #         print(
-        #             f"Внимание! Введённая цена {price} меньше, чем уже имеющаяся цена {self.__price} для продукта {self.name}!"
+        #             f"Внимание! Введённая цена {price} меньше, чем уже имеющаяся цена {self.__price} для продукта \
+        #             {self.name}!"
         #         )
         #         # спрашиваем подтверждение пользователя на ввод меньшей цены и вносим изменения.
         #         if re.match(input("Подтвердите ввод новой цены? (yes/no) >>> %: "), "yes"):

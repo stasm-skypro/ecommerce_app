@@ -3,7 +3,7 @@ from unittest.mock import patch
 import pytest
 
 from src.product import Product
-from src.category import Category
+from src.smartphone import Smartphone
 
 
 def test_product1_init(product1_fixture: Product) -> None:
@@ -121,6 +121,17 @@ def test_product_str(product1_fixture: Product) -> None:
 def test_product_add(product1_fixture: Product, product2_fixture: Product) -> None:
     """Тест для проверки метода __add__ класса Product."""
     assert product1_fixture + product2_fixture == 2800.00
+
+
+def test_product_list() -> None:
+    """Проверяем, что список products_list наполняется при каждом вызове конструктора класса."""
+    test_smartphone1 = Smartphone(
+        "Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5, 95.5, "S23 Ultra", 256, "Серый"
+    )
+    test_smartphone2 = Smartphone("Iphone 15", "512GB, Gray space", 210000.0, 8, 98.2, "15", 512, "Gray space")
+    assert test_smartphone1.quantity == 5
+    assert test_smartphone2.quantity == 8
+    assert len(Smartphone.products_list) == 53
 
 
 # -----------------------------------------------------------------------------

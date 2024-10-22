@@ -42,7 +42,7 @@ def test_add_method_with_incorrect_instance(smartphone_fixture1: Smartphone, gra
         smartphone_fixture1 + grass_fixture1
 
 
-def test_add_method_with_incorrect_instance2(smartphone_fixture1, product1_fixture) -> None:
+def test_add_method_with_incorrect_instance2(smartphone_fixture1: Smartphone, product1_fixture: Smartphone) -> None:
     """
     Тестируем работу метода __add__ класса Product с невалидными аргументами
     :param smartphone_fixture1: экземпляр класса Smartphone подкласса Product
@@ -51,3 +51,21 @@ def test_add_method_with_incorrect_instance2(smartphone_fixture1, product1_fixtu
     """
     with pytest.raises(TypeError):
         smartphone_fixture1 + product1_fixture
+
+
+def test_str_method(smartphone_fixture1: Smartphone) -> None:
+    """Тестируем строковое представление."""
+    assert str(smartphone_fixture1) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+
+
+def test_new_product(smartphone_params_fixture: dict) -> None:
+    """Тестируем класс-метод new_product."""
+    new_smartphone = Smartphone.new_product(smartphone_params_fixture)
+    assert new_smartphone.name == "Samsung Galaxy S23 Ultra"
+    assert new_smartphone.description == "256GB, Серый цвет, 200MP камера"
+    assert new_smartphone.price == 180000.0
+    assert new_smartphone.quantity == 10
+    assert new_smartphone.efficiency == 95.5
+    assert new_smartphone.model == "S23 Ultra"
+    assert new_smartphone.memory == 256
+    assert new_smartphone.color == "Серый"

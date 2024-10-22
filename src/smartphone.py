@@ -66,3 +66,5 @@ if __name__ == "__main__":
     print(smartphone3.model)
     print(smartphone3.memory)
     print(smartphone3.color)
+
+    print(smartphone3)

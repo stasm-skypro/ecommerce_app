@@ -1,9 +1,10 @@
-from typing import Any, Self
+from typing import Self
 from src.product import Product
 
 
 class Category:
     """Класс для создания экземпляров категорий товаров."""
+
     name: str
     description: str
     __products: list
@@ -24,7 +25,7 @@ class Category:
         return f"{self.name}, количество продуктов: {self.product_count} шт."
 
     # Реализуем метод для добавления товаров
-    def add_product(self, product) -> None:
+    def add_product(self, product: Product) -> None:
         """Метод добавляет продукт в список продуктов."""
         if isinstance(product, Product):
             self.__products.append(product)
@@ -45,8 +46,6 @@ class Category:
 
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
-    from product import Product
-
     print("Инициализация категории с пустым списком продуктов")
     category0 = Category(
         name="Пылесосы",

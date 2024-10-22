@@ -102,6 +102,21 @@ def smartphone_fixture2() -> Smartphone:
 
 
 @pytest.fixture
+def smartphone_params_fixture() -> dict:
+    """Фикстура для создания нового экземпляра методом new_product."""
+    return {
+        "name": "Samsung Galaxy S23 Ultra",
+        "description": "256GB, Серый цвет, 200MP камера",
+        "price": 180000.0,
+        "quantity": 5,
+        "efficiency": 95.5,
+        "model": "S23 Ultra",
+        "memory": 256,
+        "color": "Серый",
+    }
+
+
+@pytest.fixture
 def grass_fixture1() -> LawnGrass:
     """
     Фикстура для проверки инициализации экземпляра класса LawnGrass
@@ -115,3 +130,17 @@ def grass_fixture2() -> LawnGrass:
     Фикстура для проверки инициализации экземпляра класса LawnGrass
     """
     return LawnGrass("Газонная трава 2", "Выносливая трава", 450.0, 15, "США", "5 дней", "Темно-зеленый")
+
+
+@pytest.fixture
+def grass_params_fixture() -> dict:
+    """Фикстура для создания нового экземпляра методом new_product."""
+    return {
+        "name": "Газонная трава",
+        "description": "Элитная трава для газона",
+        "price": 500.0,
+        "quantity": 20,
+        "country": "Россия",
+        "germination_period": "7 дней",
+        "color": "Зеленый",
+    }
