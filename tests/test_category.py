@@ -5,7 +5,6 @@ from src.product import Product
 from src.product_iterator import ProductIterator
 
 
-
 def test_category0_init(category0_fixture: Category) -> None:
     """Тестируем инициализацию экземпляра класса Category для случая, когда
     параметр products не передаётся (None)."""
@@ -37,7 +36,12 @@ def test_category2_count(category2_fixture: Category) -> None:
 def test_add_single_product(category1_fixture: Category, product2_fixture: Product) -> None:
     """Проверяем работу метода add_product для случая, когда добавляется один продукт."""
     category1_fixture.add_product(product2_fixture)
-    assert category1_fixture.products == ['Молоко, 500.0 руб. Остаток: 5 шт.', 'Хлеб, 100.0 руб. Остаток: 3 шт.', 'Яйца, 500.0 руб. Остаток: 2 шт.', 'Хлеб, 100.0 руб. Остаток: 3 шт.']
+    assert category1_fixture.products == [
+        "Молоко, 500.0 руб. Остаток: 5 шт.",
+        "Хлеб, 100.0 руб. Остаток: 3 шт.",
+        "Яйца, 500.0 руб. Остаток: 2 шт.",
+        "Хлеб, 100.0 руб. Остаток: 3 шт.",
+    ]
     assert category1_fixture.product_count == 4
 
 
@@ -45,7 +49,7 @@ def test_add_product_to_existing_list(product1_fixture: Product, product2_fixtur
     """Проверяем работу метода add_product для случая, когда добавляется список продуктов и продукт в конструктор."""
     test_category = Category(name="Продукты", description="Товары первой необходимости", products=[product1_fixture])
     test_category.add_product(product2_fixture)
-    assert test_category.products == ['Молоко, 500.0 руб. Остаток: 5 шт.', 'Хлеб, 100.0 руб. Остаток: 3 шт.']
+    assert test_category.products == ["Молоко, 500.0 руб. Остаток: 5 шт.", "Хлеб, 100.0 руб. Остаток: 3 шт."]
 
 
 def test_products_property() -> None:

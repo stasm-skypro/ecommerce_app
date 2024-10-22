@@ -26,13 +26,15 @@ class Product:
         # Название продукта, 80 руб. Остаток: 15 шт.
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
-    def __add__(self: Self, other) -> float | Any:
-        return self.__price * self.quantity + other.__price * other.quantity
+    def __add__(self: Self, other: Any) -> float | Any:
+        # Проверяем, что складываются товары только из одинаковых классов продуктов
+        if type(other) is self.__class__:
+            return self.__price * self.quantity + other.__price * other.quantity
+        raise TypeError
 
     @classmethod
     def new_product(cls, params: dict, category: Category):
         """Метод добавляет новый продукт категорию category."""
-        # new_product = Product(**params)
         new_product = cls(**params)  # так правильней
 
         for product in category.products:
