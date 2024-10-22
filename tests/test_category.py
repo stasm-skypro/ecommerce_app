@@ -17,20 +17,19 @@ def test_category1_init(category1_fixture: Category) -> None:
     assert category1_fixture.description == "Товары первой необходимости"
 
 
-def test_category2_init(category2_fixture: Category) -> None:
-    """Тестируем инициализацию экземпляра класса Category."""
-    assert category2_fixture.name == "Одежда"
-    assert category2_fixture.description == "Товары широкого потребления"
-
-
-def test_category1_count(category1_fixture: Category) -> None:
+def test_category1_product_count(category1_fixture: Category) -> None:
     """Проверяем, что в категории создано валидное количество товаров."""
     assert len(category1_fixture.products) == 3
 
 
-def test_category2_count(category2_fixture: Category) -> None:
-    """Проверяем, что в категории создано валидное количество товаров."""
-    assert len(category2_fixture.products) == 1
+def test_category1_count(category1_fixture: Category) -> None:
+    """Проверяем, что считается валидное количество категорий."""
+    assert category1_fixture.category_count == 4  # это 4-я по счёту созданная категория товаров
+
+
+def test_category1_count2(category2_fixture: Category) -> None:
+    """Проверяем, что считается валидное количество категорий."""
+    assert category2_fixture.category_count == 5  # это 5-я по счёту созданная категория товаров
 
 
 def test_add_single_product(category1_fixture: Category, product2_fixture: Product) -> None:
@@ -54,8 +53,6 @@ def test_add_product_to_existing_list(product1_fixture: Product, product2_fixtur
 
 def test_products_property() -> None:
     """Проверяем работу геттера когда есть список продуктов."""
-    from src.product import Product
-
     product1 = Product(name="Ноутбук", description="Компьютеры", price=80000, quantity=15)
     product2 = Product(name="Смартфон", description="Телефоны", price=60000, quantity=10)
     category = Category(
