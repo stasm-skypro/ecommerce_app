@@ -1,9 +1,11 @@
+import pytest
+
 from src.lawngrass import LawnGrass
 from src.product import Product
 from src.smartphone import Smartphone
 
 
-def test_print_mixin_with_product(capsys):
+def test_print_mixin_with_product(capsys: pytest.CaptureFixture[str]) -> None:
     """Проверяем, что создании экземпляра класса Product происходит вывод в консоль."""
     # Создаём экземпляр класса через конструктор
     Product("Молоко", "Молоко коровье 3%", 500.00, 5)
@@ -26,7 +28,7 @@ def test_print_mixin_with_product(capsys):
     )
 
 
-def test_print_mixin_with_smartphone(capsys):
+def test_print_mixin_with_smartphone(capsys: pytest.CaptureFixture[str]) -> None:
     """Проверяем, что при создании экземпляра класса Product происходит вывод в консоль."""
     # Создаём экземпляр дочернего класса Smartphone через конструктор
     Smartphone(
@@ -55,7 +57,7 @@ def test_print_mixin_with_smartphone(capsys):
     )
 
 
-def test_print_mixin_with_lawngrass(capsys):
+def test_print_mixin_with_lawngrass(capsys: pytest.CaptureFixture[str]) -> None:
     """Проверяем, что при создании экземпляра класса Product происходит вывод в консоль."""
     # Создаём экземпляр дочернего класса Smartphone через конструктор
     LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
