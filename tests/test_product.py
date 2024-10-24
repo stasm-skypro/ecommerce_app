@@ -131,7 +131,7 @@ def test_product_list() -> None:
     test_smartphone2 = Smartphone("Iphone 15", "512GB, Gray space", 210000.0, 8, 98.2, "15", 512, "Gray space")
     assert test_smartphone1.quantity == 5
     assert test_smartphone2.quantity == 8
-    assert len(Smartphone.products_list) == 53
+    assert len(Smartphone.products_list) == 62
 
 
 # -----------------------------------------------------------------------------
