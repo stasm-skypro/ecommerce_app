@@ -2,9 +2,10 @@ from typing import Any, Self
 
 from src.user_interraction import use_case_product_price_setter
 from src.base_product import BaseProduct
+from src.print_mixin import PrintMixin
 
 
-class Product(BaseProduct):
+class Product(BaseProduct, PrintMixin):
     """Класс для создания экземпляров товаров."""
 
     name: str
@@ -21,6 +22,8 @@ class Product(BaseProduct):
         self.__price = price
         self.quantity = quantity
         self.total_price = total_price
+        super().__init__()  # передаём __init__ из родительского класса PrintMixin после того, как был создан экземпляр
+        # класса Product
         Product.products_list.append(self)
 
     def __str__(self: Self) -> str:
