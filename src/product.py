@@ -1,4 +1,5 @@
-from typing import Self, Any
+from typing import Any, Self
+
 from src.user_interraction import use_case_product_price_setter
 
 
