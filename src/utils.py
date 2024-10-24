@@ -28,19 +28,19 @@ def create_objects_from_json_data(data: list) -> list:
         Список объектов класса Products.
     """
     categories = []
-    for category in data:
+    for current_category in data:
         products = []
-        for product in category["products"]:
+        for product in current_category["products"]:
             products.append(Product(**product))
-        category["products"] = products
-        categories.append(Category(**category))
+        current_category["products"] = products
+        categories.append(Category(**current_category))
 
     return categories
 
 
 if __name__ == "__main__":
-    data = read_json("../data/products.json")
-    categories_data = create_objects_from_json_data(data)
+    content = read_json("../data/products.json")
+    categories_data = create_objects_from_json_data(content)
     for category in categories_data:
         print(category.name)
         print(category.products)
