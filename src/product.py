@@ -1,9 +1,10 @@
 from typing import Any, Self
 
 from src.user_interraction import use_case_product_price_setter
+from src.base_product import BaseProduct
 
 
-class Product:
+class Product(BaseProduct):
     """Класс для создания экземпляров товаров."""
 
     name: str
@@ -61,36 +62,6 @@ class Product:
         """Метод устанавливает цену продукта."""
         selected_price = use_case_product_price_setter(price, self.__price)
         self.__price = selected_price
-        # ---------------------------------------------------------------------
-        # Код ниже по тексту выносим в отдельный модуль user_interaction,
-        # т.л. логика общения с пользователем не входит в зону ответственности
-        # сеттера цены продукта.
-        # ---------------------------------------------------------------------
-        # # Если цена меньше или равна 0, то выводим предупреждение.
-        # if price <= 0:
-        #     print(f"Вы ввели цену {price}.")
-        #     print("Цена не должна быть нулевая или отрицательная.")
-        # # Иначе
-        # else:
-        #     # Если новая цена больше прежней, автоматически принимаем новую цену.
-        #     if price > self.__price:
-        #         self.__price = price
-        #         print(f"Новая цена продукта - {self.__price}.")
-        #     elif price == self.__price:
-        #         print(f"Цена продукта {self.name} не изменилась - {self.__price}.")
-        #     # Если новая цена меньше, чем уже имеющаяся цена для данного продукта,
-        #     else:
-        #         print(
-        #             f"Внимание! Введённая цена {price} меньше, чем уже имеющаяся цена {self.__price} для продукта \
-        #             {self.name}!"
-        #         )
-        #         # спрашиваем подтверждение пользователя на ввод меньшей цены и вносим изменения.
-        #         if re.match(input("Подтвердите ввод новой цены? (yes/no) >>> %: "), "yes"):
-        #             self.__price = price
-        #             print(f"Новая цена продукта - {self.__price}.")
-        #         # Иначе оставляем прежнюю цену.
-        #         else:
-        #             print(f"Цена продукта {self.name} не изменилась - {self.__price}.")
 
 
 # -----------------------------------------------------------------------------
@@ -170,4 +141,9 @@ if __name__ == "__main__":
     print(product1)
     print(product2)
     print(product1 + product2)
+    print()
+
+    print("Проверяем, что в конструктор можно закинуть отрицательную цену и ничего не будет")
+    product5 = Product("Мыло", "Мыло хозяйственное", -50.0, 1)
+    print(product5)
     print()
