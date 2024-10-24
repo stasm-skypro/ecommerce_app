@@ -1,7 +1,7 @@
 import pytest
 
-from src.smartphone import Smartphone
 from src.lawngrass import LawnGrass
+from src.smartphone import Smartphone
 
 
 def test_smartphone_init() -> None:

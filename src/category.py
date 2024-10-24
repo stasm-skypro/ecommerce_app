@@ -1,4 +1,5 @@
 from typing import Self
+
 from src.product import Product
 
 
