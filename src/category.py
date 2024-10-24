@@ -1,4 +1,5 @@
-from typing import Any, Self
+from typing import Self
+from src.product import Product
 
 
 class Category:
@@ -16,18 +17,21 @@ class Category:
         self.name = name
         self.description = description
         self.__products = products if products else []  # делаем список товаров приватным атрибутом
-        Category.category_count += 1
         self.product_count += len(self.__products)
+        Category.category_count += 1
 
     def __str__(self: Self) -> str:
         # Название категории, количество продуктов: 200 шт.
         return f"{self.name}, количество продуктов: {self.product_count} шт."
 
     # Реализуем метод для добавления товаров
-    def add_product(self, products: list | Any) -> None:
+    def add_product(self, product: Product) -> None:
         """Метод добавляет продукт в список продуктов."""
-        self.__products.append(products)
-        self.product_count += 1
+        if isinstance(product, Product):
+            self.__products.append(product)
+            self.product_count += 1
+        else:
+            raise TypeError
 
     # Реализуем геттер
     @property
@@ -42,8 +46,6 @@ class Category:
 
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
-    from product import Product
-
     print("Инициализация категории с пустым списком продуктов")
     category0 = Category(
         name="Пылесосы",
@@ -116,4 +118,3 @@ if __name__ == "__main__":
     print("Проверка строкового представления экземпляра класса категории 2")
     print(category2)
     print()
-    
