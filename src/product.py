@@ -1,3 +1,4 @@
+from logging import raiseExceptions
 from typing import Any, Self
 
 from src.user_interraction import use_case_product_price_setter
@@ -20,7 +21,10 @@ class Product(BaseProduct, PrintMixin):
         self.name = name
         self.description = description
         self.__price = price
-        self.quantity = quantity
+        if quantity > 0:
+            self.quantity = quantity
+        else:
+            raise ValueError("Товар с нулевым количеством не может быть добавлен.")
         self.total_price = total_price
         super().__init__()  # передаём __init__ из родительского класса PrintMixin после того, как был создан экземпляр
         # класса Product
@@ -150,3 +154,6 @@ if __name__ == "__main__":
     product5 = Product("Мыло", "Мыло хозяйственное", -50.0, 1)
     print(product5)
     print()
+
+    print("Проверяем, что Товар с нулевым или отрицательным количеством не может быть добавлен")
+    product6 = Product("Мыло", "Мыло хозяйственное", 50.0, 0)
