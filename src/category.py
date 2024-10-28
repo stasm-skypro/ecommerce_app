@@ -1,6 +1,12 @@
 from typing import Self
 
 from src.product import Product
+from src.project_exceptions import ZeroProductQuantityException
+
+import logging
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger("category")
 
 
 class Category:
@@ -29,9 +35,25 @@ class Category:
     def add_product(self, product: Product) -> None:
         """Метод добавляет продукт в список продуктов."""
         if isinstance(product, Product):
-            self.__products.append(product)
-            self.product_count += 1
+            try:
+                # Если количество товара = 0, возбуждаем исключение.
+                if not product.quantity:
+                    logger.info("Нельзя добавить в категорию товар с нулевой/отрицательной ценой!")
+                    raise ZeroProductQuantityException(
+                        "Нельзя добавить в категорию товар с нулевой/отрицательной ценой!"
+                    )
+            except ZeroProductQuantityException as e:
+                logger.info(str(e))
+
+            else:
+                self.__products.append(product)
+                self.product_count += 1
+                logger.info("Товар добавлен успешно!")
+            finally:
+                logger.info("Обработка добавления товара завершена.")
+
         else:
+            logger.info("TypeError")
             raise TypeError
 
     # Реализуем геттер
