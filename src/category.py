@@ -44,6 +44,13 @@ class Category:
 
         return products_list
 
+    def get_average_product_price(self) -> float:
+        """Метод вычисляет среднюю цену всех товаров в категории. Если в категории нет товаров, то возвращает 0."""
+        try:
+            return sum([_product.price for _product in self.__products]) / len(self.__products)
+        except ZeroDivisionError:
+            return 0
+
 
 # -----------------------------------------------------------------------------
 if __name__ == "__main__":
@@ -119,3 +126,8 @@ if __name__ == "__main__":
     print("Проверка строкового представления экземпляра класса категории 2")
     print(category2)
     print()
+
+    print("Проверка метода подсчёта средней цены всех товаров в категории")
+    print("Средняя цена для категории {} = {}".format(category0, category0.get_average_product_price()))
+    print("Средняя цена для категории {} = {}".format(category1, category1.get_average_product_price()))
+    print("Средняя цена для категории {} = {}".format(category2, category2.get_average_product_price()))
