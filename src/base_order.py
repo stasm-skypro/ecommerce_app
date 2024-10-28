@@ -7,4 +7,4 @@ class BaseOrder(ABC):
 
     @abstractmethod
     def add_product(self, *args: Any, **kwargs: Any) -> None:
-        pass
+        """Абстрактный метод для создания в потомках одноимённого метода"""
