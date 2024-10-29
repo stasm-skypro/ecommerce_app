@@ -1,6 +1,7 @@
 import pytest
 
 from src.lawngrass import LawnGrass
+from src.project_exceptions import ProductZeroPriceException, ProductZeroQuantityException
 from src.smartphone import Smartphone
 
 
@@ -69,3 +70,19 @@ def test_new_product(smartphone_params_fixture: dict) -> None:
     assert new_smartphone.model == "S23 Ultra"
     assert new_smartphone.memory == 256
     assert new_smartphone.color == "Серый"
+
+
+def test_smartphone_init_with_zero_quantity() -> None:
+    """Проверяем, что при попытке инициализации продукта с нулевым количеством возникнет исключение."""
+    with pytest.raises(ProductZeroQuantityException):
+        Smartphone(
+            "Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 0, 95.5, "S23 Ultra", 256, "Серый"
+        )
+
+
+def test_smartphone_init_with_zero_price() -> None:
+    """Проверяем, что при попытке инициализации продукта с нулевой ценой возникнет исключение."""
+    with pytest.raises(ProductZeroPriceException):
+        Smartphone(
+            "Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 0.0, 5, 95.5, "S23 Ultra", 256, "Серый"
+        )

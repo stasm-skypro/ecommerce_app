@@ -1,9 +1,10 @@
-from src.product import Product
-from src.base_order import BaseOrder
-from src.smartphone import Smartphone
-from src.project_exceptions import ZeroProductQuantityException
-
 import logging
+from typing import Any
+
+from src.base_order import BaseOrder
+from src.product import Product
+from src.project_exceptions import ProductZeroQuantityException
+from src.smartphone import Smartphone
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("order")
@@ -31,10 +32,10 @@ class Order(BaseOrder):
                 # Если количество товара = 0, возбуждаем исключение.
                 if not product.quantity:
                     logger.info("Нельзя добавить в категорию товар с нулевой/отрицательной ценой!")
-                    raise ZeroProductQuantityException(
+                    raise ProductZeroQuantityException(
                         "Нельзя добавить в категорию товар с нулевой/отрицательной ценой!"
                     )
-            except ZeroProductQuantityException as e:
+            except ProductZeroQuantityException as e:
                 logger.info(str(e))
 
             else:
@@ -61,6 +62,13 @@ class Order(BaseOrder):
             products_list.append(f"{str(product)}")  # Строковое представление продукта реализовано в классе Product
 
         return products_list
+
+    def get_average_product_price(self) -> float | Any:
+        """Метод вычисляет среднюю цену всех товаров в заказе. Если в заказе нет товаров, то возвращает 0."""
+        try:
+            return round(sum([_product.price for _product in self.__orders]) / len(self.__orders), 2)
+        except ZeroDivisionError:
+            return 0
 
 
 if __name__ == "__main__":
