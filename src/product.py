@@ -1,8 +1,9 @@
 from typing import Any, Self
 
-from src.user_interraction import use_case_product_price_setter
 from src.base_product import BaseProduct
 from src.print_mixin import PrintMixin
+from src.project_exceptions import ProductZeroPriceException, ProductZeroQuantityException
+from src.user_interraction import use_case_product_price_setter
 
 
 class Product(BaseProduct, PrintMixin):
@@ -19,16 +20,24 @@ class Product(BaseProduct, PrintMixin):
         """Конструктор класса Product."""
         self.name = name
         self.description = description
-        self.__price = price
-        self.quantity = quantity
+        # Делаем проверку, что товар с отрицательной или нулевой ценой не может быть инициализирован
+        if price > 0:
+            self.__price = price
+        else:
+            raise ProductZeroPriceException("Товар с нулевой или отрицательной ценой не может быть инициализирован!")
+        # Делаем проверку, что товар с нулевым количеством не может быть инициализирован
+        if quantity > 0:
+            self.quantity = quantity
+        else:
+            raise ProductZeroQuantityException("Товар с нулевым количеством не может быть инициализирован!")
         self.total_price = total_price
-        super().__init__()  # передаём __init__ из родительского класса PrintMixin после того, как был создан экземпляр
-        # класса Product
+        # ссылка на  __init__ из родительского класса PrintMixin; так сработает потому, что в
+        # родительском классе BaseProduct нет метода __init__
+        super().__init__()
         Product.products_list.append(self)
 
-    def __str__(self: Self) -> str:
+    def __str__(self) -> str:
         """Строковое представление экземпляра класса."""
-        # Название продукта, 80 руб. Остаток: 15 шт.
         return f"{self.name}, {self.price} руб. Остаток: {self.quantity} шт."
 
     def __add__(self: Self, other: Any) -> float | Any:
@@ -40,7 +49,7 @@ class Product(BaseProduct, PrintMixin):
     @classmethod
     def new_product(cls, params: dict) -> Any:
         """Метод добавляет новый продукт категорию category."""
-        new_product = cls(**params)  # вызываем конструктор класса Product
+        new_product = cls(**params)
 
         if cls.products_list:
             for product in cls.products_list:
@@ -146,7 +155,32 @@ if __name__ == "__main__":
     print(product1 + product2)
     print()
 
-    print("Проверяем, что в конструктор можно закинуть отрицательную цену и ничего не будет")
-    product5 = Product("Мыло", "Мыло хозяйственное", -50.0, 1)
-    print(product5)
+    print("Проверяем, что товар с нулевой или отрицательной ценой не может быть создан")
+    try:
+        product5 = Product("Мыло", "Мыло хозяйственное", -50.0, 1)
+    except Exception as e:
+        print(f"Сработало  исключение {e} при попытке инициализации продукта с нулевой/отрицательной ценой")
+    print()
+
+    print("Проверяем, что Товар с нулевым или отрицательным количеством не может быть создан")
+    try:
+        product6 = Product("Мыло", "Мыло хозяйственное", 50.0, 0)
+    except Exception as e:
+        print(f"Сработало  исключение {e} при попытке инициализации продукта с нулевым количеством")
+    print()
+
+    print("Проверяем, что Товар с нулевым или отрицательным количеством не может быть добавлен")
+    print("Товар перед добавлением нового:")
+    print(product3)
+    try:
+        product32 = Product.new_product(
+            {
+                "name": "Яйца",
+                "description": "Яйца 1С",
+                "price": 500.0,
+                "quantity": 0,
+            }
+        )
+    except Exception as e:
+        print(f"Сработало  исключение {e} при попытке добавления продукта с нулевым количеством")
     print()

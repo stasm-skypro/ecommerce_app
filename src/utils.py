@@ -1,9 +1,13 @@
 import json
+import logging
 import os
 from typing import Any
 
 from src.category import Category
 from src.product import Product
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger("utils")
 
 
 def read_json(path: str) -> list | Any:
@@ -16,6 +20,7 @@ def read_json(path: str) -> list | Any:
     full_path = os.path.abspath(path)
     with open(full_path, "r", encoding="utf-8") as file:
         json_content = json.load(file)
+        logger.info(f"Файл {full_path} успешно прочитан")
 
     return json_content
 

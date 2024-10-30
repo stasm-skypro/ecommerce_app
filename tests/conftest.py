@@ -2,6 +2,7 @@ import pytest
 
 from src.category import Category
 from src.lawngrass import LawnGrass
+from src.order import Order
 from src.product import Product
 from src.product_iterator import ProductIterator
 from src.smartphone import Smartphone
@@ -144,3 +145,40 @@ def grass_params_fixture() -> dict:
         "germination_period": "7 дней",
         "color": "Зеленый",
     }
+
+
+@pytest.fixture
+def order0_fixture() -> Order:
+    """Фикстура для инициализации заказа с пустым списком заказов."""
+    return Order("Заказ", "Заказ непоймичего", [])
+
+
+@pytest.fixture
+def order1_fixture() -> Order:
+    """Фикстура для инициализации заказа1."""
+    return Order(
+        "Заказ1",
+        "Заказ в интернет-магазине",
+        [
+            Smartphone(
+                "Samsung Galaxy S23 Ultra",
+                "256GB, Серый цвет, 200MP камера",
+                180000.0,
+                1,
+                95.5,
+                "S23 Ultra",
+                256,
+                "Серый",
+            )
+        ],
+    )
+
+
+@pytest.fixture
+def order2_fixture(grass_fixture1: LawnGrass) -> Order:
+    """Фикстура для инициализации заказа2."""
+    return Order(
+        "Заказ2",
+        "Заказ в интернет-магазине",
+        [LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 1, "Россия", "7 дней", "Зеленый")],
+    )

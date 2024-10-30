@@ -1,6 +1,7 @@
 import pytest
 
 from src.lawngrass import LawnGrass
+from src.project_exceptions import ProductZeroPriceException, ProductZeroQuantityException
 from src.smartphone import Smartphone
 
 
@@ -65,3 +66,15 @@ def test_new_product(grass_params_fixture: dict) -> None:
     assert new_grass.country == "Россия"
     assert new_grass.germination_period == "7 дней"
     assert new_grass.color == "Зеленый"
+
+
+def test_grass_init_with_zero_quantity() -> None:
+    """Проверяем, что при попытке инициализации продукта с нулевым количеством возникнет исключение."""
+    with pytest.raises(ProductZeroQuantityException):
+        LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 0, "Россия", "7 дней", "Зеленый")
+
+
+def test_grass_init_with_zero_price() -> None:
+    """Проверяем, что при попытке инициализации продукта с нулевой ценой возникнет исключение."""
+    with pytest.raises(ProductZeroPriceException):
+        LawnGrass("Газонная трава", "Элитная трава для газона", 0.0, 20, "Россия", "7 дней", "Зеленый")
