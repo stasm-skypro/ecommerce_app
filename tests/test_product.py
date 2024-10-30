@@ -3,6 +3,7 @@ from unittest.mock import patch
 import pytest
 
 from src.product import Product
+from src.project_exceptions import ProductZeroPriceException, ProductZeroQuantityException
 from src.smartphone import Smartphone
 
 
@@ -131,7 +132,19 @@ def test_product_list() -> None:
     test_smartphone2 = Smartphone("Iphone 15", "512GB, Gray space", 210000.0, 8, 98.2, "15", 512, "Gray space")
     assert test_smartphone1.quantity == 5
     assert test_smartphone2.quantity == 8
-    assert len(Smartphone.products_list) == 62
+    assert len(Smartphone.products_list) == 74
+
+
+def test_product_init_with_zero_quantity() -> None:
+    """Проверяем, что при попытке инициализации продукта с нулевым количеством возникнет исключение."""
+    with pytest.raises(ProductZeroQuantityException):
+        Product("Молоко", "Молоко коровье 3%", 500.00, 0)
+
+
+def test_product_init_with_zero_price() -> None:
+    """Проверяем, что при попытке инициализации продукта с нулевой ценой возникнет исключение."""
+    with pytest.raises(ProductZeroPriceException):
+        Product("Молоко", "Молоко коровье 3%", 0.00, 5)
 
 
 # -----------------------------------------------------------------------------

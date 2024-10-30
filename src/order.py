@@ -1,9 +1,16 @@
-from src.product import Product
+import logging
+from typing import Any
+
 from src.base_order import BaseOrder
+from src.product import Product
+from src.project_exceptions import ProductZeroQuantityException
 from src.smartphone import Smartphone
 
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger("order")
 
-class ProductOrder(BaseOrder):
+
+class Order(BaseOrder):
     """Класс заказов"""
 
     name: str
@@ -21,9 +28,25 @@ class ProductOrder(BaseOrder):
     def add_product(self, product: Product) -> None:
         """Метод добавляет продукт в список заказов."""
         if isinstance(product, Product):
-            self.__orders.append(product)
-            self.order_count += 1
+            try:
+                # Если количество товара = 0, возбуждаем исключение.
+                if not product.quantity:
+                    logger.info("Нельзя добавить в категорию товар с нулевой/отрицательной ценой!")
+                    raise ProductZeroQuantityException(
+                        "Нельзя добавить в категорию товар с нулевой/отрицательной ценой!"
+                    )
+            except ProductZeroQuantityException as e:
+                logger.info(str(e))
+
+            else:
+                self.__orders.append(product)
+                self.order_count += 1
+                logger.info("Товар добавлен успешно!")
+            finally:
+                logger.info("Обработка добавления товара завершена.")
+
         else:
+            logger.info("TypeError")
             raise TypeError
 
     def __str__(self) -> str:
@@ -40,10 +63,17 @@ class ProductOrder(BaseOrder):
 
         return products_list
 
+    def get_average_product_price(self) -> float | Any:
+        """Метод вычисляет среднюю цену всех товаров в заказе. Если в заказе нет товаров, то возвращает 0."""
+        try:
+            return round(sum([_product.price for _product in self.__orders]) / len(self.__orders), 2)
+        except ZeroDivisionError:
+            return 0
+
 
 if __name__ == "__main__":
     print("Инициализация заказа с пустым списков продуктов")
-    order = ProductOrder("Заказ", "Заказ непоймичего", [])
+    order = Order("Заказ", "Заказ непоймичего", [])
     print(order.name)
     print(order.description)
     print(order.orders)
@@ -51,7 +81,7 @@ if __name__ == "__main__":
     print()
 
     print("Инициализация заказа 1")
-    order1 = ProductOrder(
+    order1 = Order(
         "Заказ1",
         "Заказ в интернет-магазине",
         [
